@@ -35,6 +35,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 + linter工具：ESLinter
 + 多编辑器编码统一：EditorConfig
++ 单元测试：Karma+Mocha
 
 需要环境：
 
