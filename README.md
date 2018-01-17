@@ -47,6 +47,57 @@ IDE：
 
 考虑到网络问题，下面涉及到`npm`安装的内容的，可以用`cnpm`替换。速度可能会更快。
 
+# 项目结构
+
+    vue-
+        │
+        ├─build  项目构建(webpack)相关代码
+        │  ├─build.js               生产环境构建代码
+        │  ├─check-version.js       检查node、npm等版本
+        │  ├─dev-client.js          热重载相关
+        │  ├─dev-server.js          构建本地服务器
+        │  ├─utils.js               构建工具相关
+        │  ├─webpack.base.conf.js   webpack基础配置
+        │  ├─webpack.dev.conf.js    webpack开发环境配置
+        │  └─webpack.prod.conf.js   webpack生产环境配置
+        │
+        ├─config  项目开发环境配置
+        │  ├─dev.env.js    开发环境变量
+        │  ├─index.js      项目一些配置变量
+        │  └─prod.env.js   生产环境变量
+        │
+        ├─src   源码目录
+        │  ├─assets         资源目录
+        │  ├─common         公共模块
+        │  │ ├─constant.js  定义常量
+        │  │ ├─http.js      axios封装
+        │  │ └─utils.js     常用工具
+        │  │
+        │  ├─components     vue公共组件
+        │  ├─router         路由配置
+        │  ├─store          vuex的状态管理
+        │  ├─styles         样式文件
+        │  ├─App.vue        页面入口文件
+        │  └─main.js        程序入口文件，加载各种公共组件
+        │
+        ├─static       静态文件，比如一些图片，json数据等
+        │
+        ├─.babelrc            ES6语法编译配置
+        │
+        ├─.editorconfig       编辑器格式化统一配置
+        │
+        ├─.eslintignore       eslint需要忽略的文件格式
+        │
+        ├─.eslintrc.js        eslint-JavaScript规范配置
+        │
+        ├─.postcssrc.js       postcss配置
+        │
+        ├─README.md           项目说明
+        │
+        ├─index.html          入口页面
+        │
+        ├─package.json        项目基本信息
+        │
 
 # 搭建步骤
 
@@ -160,5 +211,58 @@ webstorm配置EditorConfig
 之后就可以根据自己的需求配置`.eslintrc`文件
 
 
-## Step3
+## Step4 配置Vue单元测试（Mocha/Karma + Vue-Test-Utils + Chai）
 
+1. 本地安装karma-chrome-launcher
+
+```cmd
+npm install karma-chrome-launcher --save-dev
+```
+
+2. 修改karma配置文件
+
+找到`test/unit/karma.conf.js`,把浏览器`PhantomJS`改成`Chrome`。(使用PhantomJS似乎会造成不可预知的错误...)
+
+```js
+//karma.conf.js
+
+const webpackConfig = require('../../build/webpack.test.conf');
+
+module.exports = function (config) {
+  config.set({
+    //browsers: ['PhantomJS'],
+    // 修改这里！！！！！
+    browsers: ['Chrome'],
+
+    ...
+  });
+};
+```
+
+3. 本地安装Vue-test-utils
+
+```cmd
+npm install --save-dev vue-test-utils
+```
+
+4. 执行npm run unit
+
+为了确保我们上面几步的顺利，并且我们可以尝试第一次单元测试。在根目录输入
+
+```
+npm run unit
+```
+
+Vue-cli已经为我们建立了一个`HelloWorld.spec.js`的测试文件
+去测试`HelloWrold.vue`
+我们可以在`test/unit/specs/HelloWorld.spec.js`下找到这个测试文件。
+**(提示: 将来所有的测试文件, 都将放`specs`这个目录下, 并以测试脚本名`.spec.js`结尾命名!)**
+
+然后在终端中出现一大片报告之后，看到下图所示的片段时, 说明本次单元测试通过了。
+![](http://onbk0ju0h.bkt.clouddn.com/18-1-17/48549181.jpg)
+
+5. 更多
+
+[Vue单元测试实战教程(Mocha/Karma + Vue-Test-Utils + Chai)](https://www.jianshu.com/p/38a37d5fccb2)
+
+## Step5
