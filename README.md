@@ -265,4 +265,22 @@ Vue-cli已经为我们建立了一个`HelloWorld.spec.js`的测试文件
 
 [Vue单元测试实战教程(Mocha/Karma + Vue-Test-Utils + Chai)](https://www.jianshu.com/p/38a37d5fccb2)
 
-## Step5
+## Step5 配置路由`vue-router`
+
+1. 如果在一个模块化工程使用路由，需要通过`Vue.use()`明确地安装路由功能。
+
+```js
+//main.js
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+
+Vue.use(VueRouter)
+```
+
+## Step6 引入UI框架--Element UI
+
+1. 本地安装Element UI
+
+```cmd
+npm install element-ui --save-dev
+```
